@@ -48,3 +48,22 @@ ORDER BY item_count DESC
 
 -- now checking the order_payments table 
 SELECT * FROM order_payments 
+-- one analysis that can be carried out on this table is to understand: 
+-- which payment methods are used more often 
+-- which products require a greater number of instalment periods 
+-- payment method distribution broken down by customer state/region or customer segment (maybe even product)
+-- look at customers using payment_type = 'voucher' to see if repeat payments are through organic payments or through promotions 
+-- checking what segments have split payments
+-- payment_value vs payment_installments to see the point after which $ amount 
+
+-- checking for count of different payment methods 
+SELECT payment_type, COUNT (*) AS payment_count, 
+FROM order_payments 
+GROUP BY payment_type 
+ORDER BY payment_count DESC
+
+-- checking the order_ids that have the maximum number of installments 
+SELECT order_id,MAX(payment_installments) AS total_installments
+FROM order_payments
+GROUP BY order_id 
+ORDER BY total_installments DESC
