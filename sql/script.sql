@@ -23,4 +23,28 @@ SELECT * FROM table_name WHERE col1 IS NULL OR col2 IS NULL...
 
 -- order_items_dataset and products_dataset can be combined on 
 -- seller_id
- 
+
+-- checking for duplicate order_ids in orders: 
+SELECT COUNT(*) AS total_rows, 
+COUNT(DISTINCT order_id) AS unique_orders,
+    CASE 
+        WHEN COUNT(*) = COUNT(DISTINCT order_id) THEN 'unique'
+        ELSE 'duplicates'
+    END AS status 
+FROM orders 
+
+-- this yielded that the order_ids in the orders table are unique 
+
+-- checking for repeated order_ids in order_items 
+-- this is because customers can purchase multiple items in a single order 
+-- we need to check which order_ids are duplicates and repeated how many times 
+
+SELECT order_id, COUNT(*) AS item_count
+FROM order_items 
+GROUP BY order_id 
+HAVING COUNT(*) > 1
+ORDER BY item_count DESC
+
+
+-- now checking the order_payments table 
+SELECT * FROM order_payments 
