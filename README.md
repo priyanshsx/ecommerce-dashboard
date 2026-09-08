@@ -13,7 +13,8 @@ The analysis focuses on three areas:
 The final output is an interactive Power BI dashboard supported by SQL-based data extraction and Python-based cleaning, transformation, and exploratory analysis. 
 
 ## Business Question 
-The research question that we tackle in this research is: which customer segments, product categories, and regimes drive repeat revenue, and how does delivery performance affect customer satisfaction? 
+The research question that we tackle in this research is: which customer seg
+ments, product categories, and regimes drive repeat revenue, and how does delivery performance affect customer satisfaction? 
 
 ### Key Questions 
 

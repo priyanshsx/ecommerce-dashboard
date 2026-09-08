@@ -67,3 +67,18 @@ SELECT order_id,MAX(payment_installments) AS total_installments
 FROM order_payments
 GROUP BY order_id 
 ORDER BY total_installments DESC
+
+-- the geolocation table doesn't seem to provide a lot of insightful value for our analysis 
+
+SELECT * FROM geolocation 
+
+-- the product_category_name_translation is super essential to understand products in English 
+
+SELECT * FROM product_category_name_translation 
+
+-- the orders table is useful for determining when the orders get approved and delivered to the customer 
+-- after the purchase timestamp 
+
+SELECT * from orders 
+
+-- 
