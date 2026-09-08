@@ -68,7 +68,8 @@ FROM order_payments
 GROUP BY order_id 
 ORDER BY total_installments DESC
 
--- the geolocation table doesn't seem to provide a lot of insightful value for our analysis 
+-- the geolocation table can be joined with product_category_name_translation, order_items to analyze
+-- the product categories and geographic regions that generate the most revenue 
 
 SELECT * FROM geolocation 
 
@@ -81,4 +82,25 @@ SELECT * FROM product_category_name_translation
 
 SELECT * from orders 
 
+-- answering research questions using custom tables 
+
+-- 1. which product categories and geographic regions generate the most revenues 
+-- tables needed: order_items + orders + customers + product_category_name_translation + products 
+-- this will give us the english product categories and the geographic regions that drive the most revenues 
+-- using the order_items 
+
+
+
+-- 2. how much revenue comes from repeat customers 
+-- tables needed: customers (for unique customer ids) + orders + order_payments 
+
+-- 3. which customer segments have the highest order value 
 -- 
+
+-- 4. revenue from repeat customers 
+-- here, we will define "late" by comparing order_delivered_customer_date to order_estimated_delivery_date
+-- in the orders table
+-- tables needed: orders + order_reviews 
+
+-- 5. categories or regions experience disproportionately high freight costs or delivery delays
+-- tables needed: order_items + products + orders + customers 
