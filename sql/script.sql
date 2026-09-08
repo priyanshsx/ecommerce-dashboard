@@ -95,7 +95,8 @@ SELECT * from orders
 -- tables needed: customers (for unique customer ids) + orders + order_payments 
 
 -- 3. which customer segments have the highest order value 
--- 
+-- for this we will be classifying customers into geographic segments, purchasing power (one-time buyer vs. repeat buyers),
+-- payment behavior (installment users vs. pay-in-full users), and order timing (holiday shoppers vs off-season shoppers)
 
 -- 4. revenue from repeat customers 
 -- here, we will define "late" by comparing order_delivered_customer_date to order_estimated_delivery_date
