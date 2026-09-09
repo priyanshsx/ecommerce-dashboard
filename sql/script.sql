@@ -89,8 +89,6 @@ SELECT * from orders
 -- this will give us the english product categories and the geographic regions that drive the most revenues 
 -- using the order_items 
 
-
-
 -- 2. how much revenue comes from repeat customers 
 -- tables needed: customers (for unique customer ids) + orders + order_payments 
 
