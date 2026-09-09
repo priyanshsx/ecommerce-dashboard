@@ -146,13 +146,33 @@ GROUP BY customer_type
 ORDER BY total_revenue DESC 
 
 -- 3. which customer segments have the highest order value 
--- for this we will be classifying customers into geographic segments, purchasing power (one-time buyer vs. repeat buyers),
--- payment behavior (installment users vs. pay-in-full users), and order timing (holiday shoppers vs off-season shoppers)
+    -- for this we will be classifying customers into geographic segments, purchasing power (one-time buyer vs. repeat buyers),
+    -- payment behavior (installment users vs. pay-in-full users), and order timing (holiday shoppers vs off-season shoppers)
 
 -- 4. revenue from repeat customers 
--- here, we will define "late" by comparing order_delivered_customer_date to order_estimated_delivery_date
--- in the orders table
--- tables needed: orders + order_reviews 
+    -- "late" is defined by comparing order_delivered_customer_date to order_estimated_delivery_date
+    -- in the orders table
+    -- tables needed: orders + order_reviews 
+    -- here we will join orders and order_reviews table ON order_id 
+    -- if there's even a single day's delay when we compare order_estimated_delivery date
+    -- and order_delivered_customer_date, that will be considered late 
+    -- we will then check for the same order_id in the order_reviews table what 
+    -- review_score they left
+    -- to get a baseline of scores, we can check the average of the scores for timely delivered 
+    -- deliveries so we we have a benchmark 
+
+CREATE TABLE question_four AS 
+SELECT 
+    CASE 
+        WHEN order_delivered_customer_date > order_estimated_delivery_date THEN 'late'
+        ELSE 'on time'
+    END AS delivery_status,
+    AVG(review_score) AS avg_review_score,
+    COUNT(orders.order_id) AS total_orders 
+FROM orders 
+LEFT JOIN order_reviews 
+ON orders.order_id = order_reviews.order_id 
+GROUP BY delivery_status 
 
 -- 5. categories or regions experience disproportionately high freight costs or delivery delays
 -- tables needed: order_items + products + orders + customers 
