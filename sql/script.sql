@@ -85,15 +85,15 @@ SELECT * from orders
 -- answering research questions using custom tables 
 
 -- 1. which product categories and geographic regions generate the most revenues 
--- tables needed: order_items + orders + customers + product_category_name_translation + products 
--- this will give us the english product categories and the geographic regions that drive  
--- the most revenues using the order_items 
--- dividing into two groups: 
--- Group A: orders linked to order_items, and orders linked to customers 
--- Group B: products linked to product_category_name_translation 
--- Group B can be joined using a left join where we join products with product_category_name_translation 
--- Group A i'm not sure how but I know that groups A and B can be joined using product_id 
--- i think a left join is preferred 
+    -- tables needed: order_items + orders + customers + product_category_name_translation + products 
+    -- this will give us the english product categories and the geographic regions that drive  
+    -- the most revenues using the order_items 
+    -- dividing into two groups: 
+    -- Group A: orders linked to order_items, and orders linked to customers 
+    -- Group B: products linked to product_category_name_translation 
+    -- Group B can be joined using a left join where we join products with product_category_name_translation 
+    -- Group A i'm not sure how but I know that groups A and B can be joined using product_id 
+    -- i think a left join is preferred 
 
 CREATE TABLE question_one AS 
 SELECT 
@@ -116,7 +116,34 @@ ORDER BY
     total_revenue DESC
 
 -- 2. how much revenue comes from repeat customers 
--- tables needed: customers (for unique customer ids) + orders + order_payments 
+    -- tables needed: customers (for unique customer ids) + orders + order_payments 
+    -- we can use a CTE for computing the total orders per customer_unique_id 
+    -- if the count > 1, that customer is a repeat customer 
+    -- 
+CREATE TABLE question_two AS  
+WITH customer_classification AS (
+    SELECT 
+        customer_unique_id,
+        COUNT(customer_id) AS total_orders,
+        CASE 
+            WHEN COUNT(customer_id) > 1 THEN 'repeat customer'
+            ELSE 'one-time customer' 
+            END AS customer_type 
+    FROM customers 
+    GROUP BY customer_unique_id
+    )
+SELECT 
+    customer_classification.customer_type,
+    SUM(order_items.price) AS total_revenue 
+FROM customer_classification 
+LEFT JOIN customers 
+    ON customer_classification.customer_unique_id = customers.customer_unique_id
+LEFT JOIN orders 
+    ON customers.customer_id = orders.customer_id
+LEFT JOIN order_items 
+    ON orders.order_id = order_items.order_id 
+GROUP BY customer_type
+ORDER BY total_revenue DESC 
 
 -- 3. which customer segments have the highest order value 
 -- for this we will be classifying customers into geographic segments, purchasing power (one-time buyer vs. repeat buyers),
