@@ -14,3 +14,7 @@ df = con.sql("""
     FROM question_five 
 """).df()
 
+# filtering out delivery delays and high freight costs
+late_deliveries = df.groupby('customer_state')['total_late_deliveries'].sum()
+high_freight_cost = df.groupby('product_category_name_english')['avg_freight_cost'].sum()
+
