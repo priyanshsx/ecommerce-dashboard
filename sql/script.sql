@@ -175,4 +175,34 @@ ON orders.order_id = order_reviews.order_id
 GROUP BY delivery_status 
 
 -- 5. categories or regions experience disproportionately high freight costs or delivery delays
--- tables needed: order_items + products + orders + customers 
+    -- tables needed: order_items + products + orders + customers + product_category_name_translation
+    -- i think this would be similar to the previous question just this time we're looking at 
+    -- high freight costs and delivery delays 
+    -- for delivery delays: we can look at the comparison between delivered_customer_date and 
+    -- order_estimated_delivery_date 
+    -- we can also average out the freigh costs as a baseline to compare which regions have the highest
+    -- freight costs 
+
+CREATE TABLE question_five AS 
+SELECT 
+    product_category_name_translation.product_category_name_english,
+    customers.customer_state,
+    ROUND(AVG(order_items.freight_value), 2) AS avg_freight_cost,
+
+    SUM(CASE 
+        WHEN orders.order_delivered_customer_date > orders.order_estimated_delivery_date THEN 1
+        ELSE 0
+        END) AS total_late_deliveries
+FROM order_items 
+LEFT JOIN orders 
+    ON order_items.order_id = orders.order_id 
+LEFT JOIN customers     
+    ON orders.customer_id = customers.customer_id 
+LEFT JOIN products 
+    ON order_items.product_id = products.product_id 
+LEFT JOIN product_category_name_translation 
+    ON products.product_category_name = product_category_name_translation.product_category_name 
+GROUP BY  
+    product_category_name_translation.product_category_name_english,
+    customers.customer_state 
+ORDER BY total_late_deliveries DESC
