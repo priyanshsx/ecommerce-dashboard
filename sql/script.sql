@@ -146,8 +146,54 @@ GROUP BY customer_type
 ORDER BY total_revenue DESC 
 
 -- 3. which customer segments have the highest order value 
-    -- for this we will be classifying customers into geographic segments, purchasing power (one-time buyer vs. repeat buyers),
-    -- payment behavior (installment users vs. pay-in-full users), and order timing (holiday shoppers vs off-season shoppers)
+    -- for this we will be classifying customers into geographic segments, 
+    -- purchasing power (one-time buyer vs. repeat buyers),
+    -- payment behavior (installment users vs. pay-in-full users), and 
+    -- order timing (holiday shoppers vs off-season shoppers)
+    
+    -- tables needed: customers + orders + order_payments 
+    -- we can look at the geographical regions from the customers table, 
+    -- asociate the customer_unique_id to one-time vs. repeat buyers, 
+    -- use the order_payments to analyze installment users vs. pay-in-full users,
+    -- 
+CREATE TABLE question_three AS  
+WITH customer_loyalty AS (
+    SELECT 
+        customer_unique_id,
+        COUNT(customer_id) AS total_orders,
+        CASE 
+            WHEN COUNT(customer_id) > 1 THEN 'repeat customer'
+            ELSE 'one-time customer' 
+            END AS loyalty_segment 
+    FROM customers 
+    GROUP BY customer_unique_id
+    )
+SELECT 
+    customers.customer_state AS geographic_segment,
+    customer_loyalty.loyalty_segment,
+
+    CASE 
+        WHEN payment_installments = 1 THEN 'pay-in-full'
+        ELSE 'installments'
+    END AS payment_segment,
+
+    ROUND(AVG(order_payments.payment_value), 2) AS avg_order_value,
+    COUNT(DISTINCT orders.order_id) AS total_orders 
+
+FROM orders 
+LEFT JOIN customers 
+    ON orders.customer_id = customers.customer_id 
+LEFT JOIN customer_loyalty 
+    ON customers.customer_unique_id = customer_loyalty.customer_unique_id 
+LEFT JOIN order_payments 
+    ON orders.order_id = order_payments.order_id 
+
+GROUP BY 
+    customers.customer_state,
+    customer_loyalty.loyalty_segment,
+    payment_segment 
+ORDER BY 
+    avg_order_value DESC 
 
 -- 4. revenue from repeat customers 
     -- "late" is defined by comparing order_delivered_customer_date to order_estimated_delivery_date
