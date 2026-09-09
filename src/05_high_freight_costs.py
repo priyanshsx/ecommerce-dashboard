@@ -63,4 +63,6 @@ plt.axvline(x=cost_threshold, color='red', linestyle='--', alpha=0.5, label=f"To
 plt.axhline(y=delay_threshold, color='orange', linestyle='--', alpha=0.5, label=f"Top 1% Deliveries Delayed ({delay_threshold: .1f})")
 
 plt.savefig('/home/priyansh/Documents/d/ecommerce dashboard/figures/05_high_freight_costs.png', dpi=300)
-print('Image saved to the given folder.')
+df.to_csv('/home/priyansh/Documents/d/ecommerce dashboard/notebooks/05_high_freight_costs.csv')
+print('Image saved to figures/')
+print('05_high_freight_costs.csv saved to notebooks/')
