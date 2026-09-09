@@ -37,5 +37,6 @@ plt.legend(title='Product Category', bbox_to_anchor=(1.05,1), loc='upper left')
 plt.tight_layout()
 
 plt.savefig('/home/priyansh/Documents/d/ecommerce dashboard/figures/combined_revenue_geography.png', dpi=300)
-print('Image saved to the given folder.')
-
+df.to_csv('/home/priyansh/Documents/d/ecommerce dashboard/notebooks/01_revenue_analysis.csv')
+print('Image saved to figures/')
+print('01_revenue_analysis.csv saved to notebooks/')

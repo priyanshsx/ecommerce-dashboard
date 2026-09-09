@@ -31,5 +31,7 @@ plt.legend(title='Payment Method')
 plt.tight_layout()
 
 plt.savefig('/home/priyansh/Documents/d/ecommerce dashboard/figures/customer_segments_avg_order_value.png', dpi=300)
-print('Image saved to the given folder.')
+df.to_csv('/home/priyansh/Documents/d/ecommerce dashboard/notebooks/03_customer_segments.csv')
+print('Image saved to figures/')
+print('03_customer_segments.csv saved to notebooks/')
 

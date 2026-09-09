@@ -25,4 +25,6 @@ plt.title('Revenue Breadown: Repeat vs. One-time Customers', fontsize=16)
 plt.tight_layout()
 
 plt.savefig('/home/priyansh/Documents/d/ecommerce dashboard/figures/revenue_by_customer_type.png', dpi=300)
-print('Image saved to the given folder.')
+df.to_csv('/home/priyansh/Documents/d/ecommerce dashboard/notebooks/02_repeat_customers.csv')
+print('Image saved to figures/')
+print('02_repeat_customers.csv saved to notebooks/')
