@@ -86,8 +86,34 @@ SELECT * from orders
 
 -- 1. which product categories and geographic regions generate the most revenues 
 -- tables needed: order_items + orders + customers + product_category_name_translation + products 
--- this will give us the english product categories and the geographic regions that drive the most revenues 
--- using the order_items 
+-- this will give us the english product categories and the geographic regions that drive  
+-- the most revenues using the order_items 
+-- dividing into two groups: 
+-- Group A: orders linked to order_items, and orders linked to customers 
+-- Group B: products linked to product_category_name_translation 
+-- Group B can be joined using a left join where we join products with product_category_name_translation 
+-- Group A i'm not sure how but I know that groups A and B can be joined using product_id 
+-- i think a left join is preferred 
+
+CREATE TABLE question_one AS 
+SELECT 
+    product_category_name_translation.product_category_name_english, 
+    customers.customer_city,
+    SUM(order_items.price) AS total_revenue
+FROM order_items 
+LEFT JOIN orders
+    ON order_items.order_id = orders.order_id 
+LEFT JOIN customers 
+    ON orders.customer_id = customers.customer_id 
+LEFT JOIN products 
+    ON order_items.product_id = products.product_id 
+LEFT JOIN product_category_name_translation
+    ON products.product_category_name = product_category_name_translation.product_category_name 
+GROUP BY 
+    product_category_name_english,
+    customer_city
+ORDER BY 
+    total_revenue DESC
 
 -- 2. how much revenue comes from repeat customers 
 -- tables needed: customers (for unique customer ids) + orders + order_payments 
