@@ -14,7 +14,26 @@ df = con.sql("""
     FROM question_five 
 """).df()
 
-# filtering out delivery delays and high freight costs
-late_deliveries = df.groupby('customer_state')['total_late_deliveries'].sum()
-high_freight_cost = df.groupby('product_category_name_english')['avg_freight_cost'].sum()
+# here we group by state 2 things: sum of total late deliveries and the avg of freight costs 
+state_summary = df.groupby('customer_state').agg({
+    'total_late_deliveries': 'sum',
+    'avg_freight_cost': 'mean'
+})
+
+state_summary.plot(
+    kind='scatter',
+    x='avg_freight_cost',
+    y='total_late_deliveries',
+    figsize=(10,6),
+    s=100,
+    alpha=0.7  
+)
+
+# chart details 
+plt.title('Regions with High Freight Costs or Delivery Delays', fontsize=16)
+plt.xlabel('Average Freight Cost', fontsize=12)
+plt.ylabel('Total Late Deliveries', fontsize=12)
+
+plt.savefig('/home/priyansh/Documents/d/ecommerce dashboard/figures/freight_costs_delivery_delays.png', dpi=300)
+print('Image saved to the given folder.')
 
