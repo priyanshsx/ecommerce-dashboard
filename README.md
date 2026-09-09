@@ -61,5 +61,19 @@ The dataset includes information on:
 
 ## Pipeline 
 
+Data Extraction: DuckDB for SQL queries, joining multiple relational tables (orders, customers, reviews, products) and aggregating initial metrics directly.
+
+Transformation & Statistical Analysis: Leveraged Pandas to clean data, engineer new features (e.g., State-Category combinations), and apply statistical methods—specifically using the 99th percentile (Quantile) to dynamically identify logistics outliers in heavily right-skewed data.
+
+Visualization & Deployment: Exported the statistically filtered data to CSV and imported it into Power BI to build an interactive, user-facing dashboard with drill-down capabilities via geographic and categorical slicers.
+
 ## Key Findings 
+
+Satisfaction is Tied to Logistics: There is a stark correlation between delivery performance and customer sentiment; late deliveries cause average review scores to plummet by nearly two full stars (out of 5).
+
+The Volume Bottleneck: São Paulo generates massive revenue but also experiences the highest absolute volume of late deliveries, highlighting a critical need for local last-mile delivery optimization.
+
+The Margin Bleed: Statistical outlier detection revealed that remote northern and northeastern states (e.g., Maranhão, Paraíba) experience extreme freight costs, frequently exceeding 100+ BRL for bulky categories like furniture, which heavily erodes profit margins.
+
+Revenue & Loyalty Drivers: (Note: Add 1-2 sentences here summarizing your specific findings from your first three Python charts regarding your top categories and repeat customer revenue!)
 
