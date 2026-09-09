@@ -16,7 +16,7 @@ plt.figure(figsize=(8,8))
 plt.pie(
     df['total_revenue'],
     labels=df['customer_type'],
-    autopct='%1.1f%%',
+    autopct='%1.1f%%', # converting raw revenue numbers into decimals 
     startangle=90,
     colors=['#66b3ff','#ff9999']
 )
