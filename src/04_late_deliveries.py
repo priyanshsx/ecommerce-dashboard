@@ -27,5 +27,7 @@ plt.ylabel('Average Review Score (/5)', fontsize=12)
 plt.ylim(0, 5) # to not let the chart get cut off 
 
 plt.savefig('/home/priyansh/Documents/d/ecommerce dashboard/figures/delivery_delays_review_scores.png', dpi=300)
-print('Image saved to the given folder.')
+df.to_csv('/home/priyansh/Documents/d/ecommerce dashboard/notebooks/04_late_deliveries.csv')
+print('Image saved to figures/')
+print('04_high_freight_costs.csv saved to notebooks/')
 
