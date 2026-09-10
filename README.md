@@ -1,4 +1,4 @@
-# E-commerce Sales & Campaign Performance Dashboard
+# # E-commerce Sales & Logistics Performance Dashboard
 
 ## Overview 
 
@@ -10,7 +10,7 @@ The analysis focuses on three areas:
 - customer repeat behavior 
 - delivery performance and customer satisfaction 
 
-The final output is an interactive Power BI dashboard supported by SQL-based data extraction and Python-based cleaning, transformation, and exploratory analysis. 
+The final output is a Tableau dashboard supported by SQL-based data extraction and Python-based cleaning, transformation, and exploratory analysis. Check out the public dashboard [here](https://public.tableau.com/views/OlistE-CommercePerformanceDashboard_17890159015860/Dashboard2?:language=en-GB&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link). 
 
 ## Business Question 
 The research question that we tackle in this research is: which customer seg
@@ -75,5 +75,4 @@ The Volume Bottleneck: São Paulo generates massive revenue but also experiences
 
 The Margin Bleed: Statistical outlier detection revealed that remote northern and northeastern states (e.g., Maranhão, Paraíba) experience extreme freight costs, frequently exceeding 100+ BRL for bulky categories like furniture, which heavily erodes profit margins.
 
-Revenue & Loyalty Drivers: (Note: Add 1-2 sentences here summarizing your specific findings from your first three Python charts regarding your top categories and repeat customer revenue!)
 
